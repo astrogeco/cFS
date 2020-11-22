@@ -37,3 +37,6 @@ jobs:
       # Setup the build system
       - name: Make Prep
         run: make prep
+        
+      - name: Make Install
+        run: make install

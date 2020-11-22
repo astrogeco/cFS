@@ -24,9 +24,10 @@ jobs:
       # Setup the build system
       - name: Copy Files
         run: |
-          pwd
-          cp ./cfe/Makefile.sample Makefile
-          cp ./cfe/sample_defs sample_defs             
+          cd cfe
+          ls
+#          cp ./cfe/Makefile.sample Makefile
+ #         cp ./cfe/sample_defs sample_defs             
         
       # Setup the build system
       - name: Make Prep

@@ -21,6 +21,9 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Get submodules
+        uses: textbook/git-checkout-submodule-action@2.1.1
+
       # Setup the build system
       - name: Copy Files
         run: |

@@ -52,9 +52,7 @@ jobs:
         run: sudo apt-get install lcov doxygen graphviz -y
         
       - name: Run Tests
-        run: |
-          make
-          make test
+        run: make test
           
       - name: Build Docs                  
         run: | 

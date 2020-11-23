@@ -33,11 +33,12 @@ jobs:
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
+          pwd
           
       - uses: actions/cache@v2
         id: cache-build
         with:
-          path: build
+          path: cFS/build
           key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
         
@@ -60,7 +61,7 @@ jobs:
     - uses: actions/cache@v2
       id: cache-build
       with:
-        path: build
+        path: cFS/build
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
     - name: Make Tests
@@ -77,7 +78,7 @@ jobs:
     - uses: actions/cache@v2
       id: cache-build
       with:
-        path: build
+        path: cFS/build
         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
     - name: Doxygen Setup

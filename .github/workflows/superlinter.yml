@@ -52,11 +52,14 @@ jobs:
         env:  
           ENABLE_UNIT_TESTS: true
         run: | 
+          sudo apt-get install lcov -y
           make install
           make test
           
-      - name: Build Docs
-        run: make doc
+      - name: Build Docs                  
+        run: | 
+          sudo apt-get install doxygen graphviz -y
+          make doc
 
       - name: Build Usersguide
         run: make usersguide

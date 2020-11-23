@@ -48,3 +48,45 @@ jobs:
         
       - name: Make Install
         run: make install
+
+  make-tests:
+    runs-on: ubuntu-18.04
+    name: Make Tests
+    needs: build-exec 
+    env: 
+      ENABLE_UNIT_TESTS: true
+
+    steps:
+    - uses: actions/cache@v2
+      id: cache-build
+      with:
+        path: build
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      
+    - name: Make Tests
+      run: | 
+        make install
+        make test
+  
+  make-docs:
+    runs-on: ubuntu-18.04
+    name: Make Tests
+    needs: build-exec 
+
+    steps:
+    - uses: actions/cache@v2
+      id: cache-build
+      with:
+        path: build
+        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+      
+    - name: Doxygen Setup
+      run: |
+        apt-get install doxygen -y
+        apt-get install graphviz -y
+
+    - name: Make Docs
+      run: make doc
+      
+
+

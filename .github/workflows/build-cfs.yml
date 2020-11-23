@@ -37,8 +37,8 @@ jobs:
       - name: make
         run: make
 
-      - name: install dependendcies
-        run: sudo apt-get install lcov doxygen graphviz -y
+      - name: Install Dependencies
+        run: sudo apt-get install lcov -y
 
       - name: Run Tests
         run: make test
@@ -65,6 +65,9 @@ jobs:
       # Setup the build system
       - name: Make Prep
         run: make prep
+
+      - name: Install Dependencies
+        run: sudo apt-get install lcov doxygen graphviz -y
 
       - name: Build Docs
         run: |

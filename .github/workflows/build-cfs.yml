@@ -42,8 +42,11 @@ jobs:
 
       - name: Run Tests
         run: make test
+
+      - name: Check Coverage
+        run: make lcov
         
-  check-coverage:
+  # check-coverage:
     runs-on: ubuntu-18.04
 
     steps:

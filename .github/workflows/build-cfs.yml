@@ -17,7 +17,7 @@ jobs:
         deprecate: [false, true]
         buildtype: [debug, release]
     # Name the Job
-    name: Build Executables
+    name: Executables and Tests
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
     env:
@@ -84,7 +84,7 @@ jobs:
 
   build-docs:
     # Name the Job
-    name: Build Documents
+    name: cFE Documentation
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
@@ -112,7 +112,7 @@ jobs:
         run: |
           make doc > make_doc_stdout.txt 2> make_doc_stderr.txt
 
-      - name: Check Docs ERRORS
+      - name: Check ERRORS
         run: |
           if [[ -s make_doc_stderr.txt ]]; then
             echo "You must fix doxygen errors for \"doc\" before submitting a pull request"
@@ -123,7 +123,7 @@ jobs:
 
   build-usersguide:
     # Name the Job
-    name: Build Users Guide
+    name: Users Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
@@ -171,7 +171,7 @@ jobs:
 
   build-osalguide:
     # Name the Job
-    name: Build Osal Guide
+    name: Osal Guide
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 

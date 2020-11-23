@@ -5,6 +5,7 @@ on: push
 
 env:
   SIMULATION: native
+  ENABLE_UNIT_TESTS: true
     
 jobs:   
     
@@ -48,18 +49,16 @@ jobs:
       - name: make
         run: make
         
-      - name: make tests
-        env:  
-          ENABLE_UNIT_TESTS: true
-        run: | 
-          sudo apt-get install lcov -y
+      - name: install dependendcies
+        run: sudo apt-get install lcov doxygen graphviz -y
+        
+      - name: Run Tests
+        run: |
           make install
           make test
           
       - name: Build Docs                  
-        run: | 
-          sudo apt-get install doxygen graphviz -y
-          make doc
+        run: make doc
 
       - name: Build Usersguide
         run: make usersguide

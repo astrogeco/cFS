@@ -121,6 +121,32 @@ jobs:
             exit -1
           fi
 
+  build-usersguide:
+    # Name the Job
+    name: Build Users Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      # Setup the build system
+      - name: Copy Files
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+
+      # Setup the build system
+      - name: Make Prep
+        run: make prep
+
+      - name: Install Dependencies
+        run: sudo apt-get install lcov doxygen graphviz -y      
+
       - name: Build Usersguide
         run: |
           make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
@@ -143,6 +169,32 @@ jobs:
             exit -1
           fi
 
+  build-osalguide:
+    # Name the Job
+    name: Build Osal Guide
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      # Setup the build system
+      - name: Copy Files
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+
+      # Setup the build system
+      - name: Make Prep
+        run: make prep
+
+      - name: Install Dependencies
+        run: sudo apt-get install lcov doxygen graphviz -y      
+
       - name: Build OSAL Guide
         run: |
           make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
@@ -164,6 +216,7 @@ jobs:
             cat build/doc/warnings.log
             exit -1
           fi
+
 
 
 

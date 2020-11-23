@@ -47,45 +47,62 @@ jobs:
         
       - name: make
         run: make
+        
+      - name: make tests
+        env:  
+          ENABLE_UNIT_TESTS: true
+        run: | 
+          make prep
+          make 
+          
+      - name: Build Docs
+        run: make doc
 
-  make-tests:
-    runs-on: ubuntu-18.04
-    name: Make Tests
-    needs: build-exec 
-    env: 
-      ENABLE_UNIT_TESTS: true
+      - name: Build Usersguide
+        run: make usersguide
+        
+      - name: Build OSAL Guide
+        run: make osalguide
 
-    steps:
-    - uses: actions/cache@v2
-      id: cache-build
-      with:
-        path: cFS/build
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+
+#   make-tests:
+#     runs-on: ubuntu-18.04
+#     name: Make Tests
+#     needs: build-exec 
+#     env: 
+#       ENABLE_UNIT_TESTS: true
+
+#     steps:
+#     - uses: actions/cache@v2
+#       id: cache-build
+#       with:
+#         path: cFS/build
+#         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
-    - name: Make Tests
-      run: | 
-        make install
-        make test
+#     - name: Make Tests
+#       run: | 
+#         make install
+#         make test
   
-  make-docs:
-    runs-on: ubuntu-18.04
-    name: Make Docs
-    needs: build-exec 
+#   make-docs:
+#     runs-on: ubuntu-18.04
+#     name: Make Docs
+#     needs: build-exec 
 
-    steps:
-    - uses: actions/cache@v2
-      id: cache-build
-      with:
-        path: cFS/build
-        key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
+#     steps:
+#     - uses: actions/cache@v2
+#       id: cache-build
+#       with:
+#         path: cFS/build
+#         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
       
-    - name: Doxygen Setup
-      run: |
-        apt-get install doxygen -y
-        apt-get install graphviz -y
+#     - name: Doxygen Setup
+#       run: |
+#         apt-get install doxygen -y
+#         apt-get install graphviz -y
 
-    - name: Make Docs
-      run: make doc
+#     - name: Make Docs
+#       run: make doc
       
 
 

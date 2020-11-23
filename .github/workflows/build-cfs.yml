@@ -6,9 +6,9 @@ on: push
 env:
   SIMULATION: native
   ENABLE_UNIT_TESTS: true
-    
-jobs:   
-    
+
+jobs:
+
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
   build-exec:
@@ -17,7 +17,7 @@ jobs:
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
-    steps:      
+    steps:
       # Checks out a copy of your repository on the ubuntu-latest machine
       - name: Checkout code
         uses: actions/checkout@v2
@@ -29,97 +29,109 @@ jobs:
         run: |
           cp ./cfe/cmake/Makefile.sample Makefile
           cp -r ./cfe/cmake/sample_defs sample_defs
-          pwd
-          
-#       - uses: actions/cache@v2
-#         id: cache-build
-#         with:
-#           path: |
-#             ./build
-#             ./sample_defs
-#            Makefile
-#          key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
 
-        
       # Setup the build system
       - name: Make Prep
         run: make prep
-        
+
       - name: make
         run: make
-        
+
       - name: install dependendcies
         run: sudo apt-get install lcov doxygen graphviz -y
-        
+
       - name: Run Tests
         run: make test
-          
-      - name: Build Docs                  
-        run: | 
-          make doc > make_doc_stdout.txt 2> make_doc_stderr.txt
-          
-      - name: Check Docs ERRORS
-        run: |
-          if [[ -s make_doc_stderr.txt ]]; then
-            echo "You must fix doxygen errors for \"doc\" before submitting a pull request"
-            echo ""
-            cat make_doc_stderr.txt
-            exit -1
-          fi
 
-      - name: Build Usersguide
-        run: |
-          make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
-          
-      - name: Check Userguide ERRORS
-        run: |
-          if [[ -s make_usersguide_stderr.txt ]]; then
-            echo "You must fix doxygen errors for \"usersguide\" before submitting a pull request"
-            echo ""
-            cat make_usersguide_stderr.txt
-            exit -1
-          fi
-          
-      - name: Check Userguide WARNINGS
-        run: |
-          if [[ -s build/doc/warnings.log ]]; then
-            echo "You must fix doxygen warnings for \"usersguide\" before submitting a pull request"
-            echo ""
-            cat build/doc/warnings.log
-            exit -1
-          fi
-        
-      - name: Build OSAL Guide
-        run: |
-          make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
-          
-      - name: Check OSAL Guide ERRORS
-        run: |
-          if [[ -s make_osalguide_stderr.txt ]]; then
-            echo "You must fix doxygen errors for \"osalguide\" before submitting a pull request"
-            echo ""
-            cat make_osalguide_stderr.txt
-            exit -1
-          fi  
+  build-docs:
+    # Name the Job
+    name: Build Documents
+    # Set the type of machine to run on
+    runs-on: ubuntu-18.04
+
+      steps:
+        # Checks out a copy of your repository on the ubuntu-latest machine
+        - name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            submodules: true
+
+        # Setup the build system
+        - name: Copy Files
+          run: |
+            cp ./cfe/cmake/Makefile.sample Makefile
+            cp -r ./cfe/cmake/sample_defs sample_defs
+
+        # Setup the build system
+        - name: Make Prep
+          run: make prep
             
-      - name: Check OSAL Guide WARNINGS
-        run: |
-          if [[ -s build/doc/warnings.log ]]; then
-            echo "You must fix doxygen warnings for \"osalguide\" before submitting a pull request"
-            echo ""
-            cat build/doc/warnings.log
-            exit -1
-          fi
+        - name: Build Docs
+          run: |
+            make doc > make_doc_stdout.txt 2> make_doc_stderr.txt
 
-          
+        - name: Check Docs ERRORS
+          run: |
+            if [[ -s make_doc_stderr.txt ]]; then
+              echo "You must fix doxygen errors for \"doc\" before submitting a pull request"
+              echo ""
+              cat make_doc_stderr.txt
+              exit -1
+            fi
+
+        - name: Build Usersguide
+          run: |
+            make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
+
+        - name: Check Userguide ERRORS
+          run: |
+            if [[ -s make_usersguide_stderr.txt ]]; then
+              echo "You must fix doxygen errors for \"usersguide\" before submitting a pull request"
+              echo ""
+              cat make_usersguide_stderr.txt
+              exit -1
+            fi
+
+        - name: Check Userguide WARNINGS
+          run: |
+            if [[ -s build/doc/warnings.log ]]; then
+              echo "You must fix doxygen warnings for \"usersguide\" before submitting a pull request"
+              echo ""
+              cat build/doc/warnings.log
+              exit -1
+            fi
+
+        - name: Build OSAL Guide
+          run: |
+            make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
+
+        - name: Check OSAL Guide ERRORS
+          run: |
+            if [[ -s make_osalguide_stderr.txt ]]; then
+              echo "You must fix doxygen errors for \"osalguide\" before submitting a pull request"
+              echo ""
+              cat make_osalguide_stderr.txt
+              exit -1
+            fi
+
+        - name: Check OSAL Guide WARNINGS
+          run: |
+            if [[ -s build/doc/warnings.log ]]; then
+              echo "You must fix doxygen warnings for \"osalguide\" before submitting a pull request"
+              echo ""
+              cat build/doc/warnings.log
+              exit -1
+            fi
+
+
 
 
 
 #   make-tests:
 #     runs-on: ubuntu-18.04
 #     name: Make Tests
-#     needs: build-exec 
-#     env: 
+#     needs: build-exec
+#     env:
 #       ENABLE_UNIT_TESTS: true
 
 #     steps:
@@ -128,16 +140,16 @@ jobs:
 #       with:
 #         path: cFS/build
 #         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-      
+
 #     - name: Make Tests
-#       run: | 
+#       run: |
 #         make install
 #         make test
-  
+
 #   make-docs:
 #     runs-on: ubuntu-18.04
 #     name: Make Docs
-#     needs: build-exec 
+#     needs: build-exec
 
 #     steps:
 #     - uses: actions/cache@v2
@@ -145,7 +157,7 @@ jobs:
 #       with:
 #         path: cFS/build
 #         key: ${{ runner.os }}-${{ hashFiles('**/lockfiles') }}
-      
+
 #     - name: Doxygen Setup
 #       run: |
 #         apt-get install doxygen -y
@@ -153,6 +165,3 @@ jobs:
 
 #     - name: Make Docs
 #       run: make doc
-      
-
-

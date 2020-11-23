@@ -12,10 +12,17 @@ jobs:
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
   run-tests:
+    strategy:
+      matrix:
+        deprecate: [false, true]
+        buildtype: [debug, release]
     # Name the Job
     name: Build Executables
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
+    env:
+      OMIT_DEPRECATED: ${{ matrix.deprecate }}
+      BUILDTYPE: ${{ matrix.buildtype }}
 
     steps:
       # Checks out a copy of your repository on the ubuntu-latest machine

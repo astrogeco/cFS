@@ -11,7 +11,7 @@ jobs:
 
   # Set the job key. The key is displayed as the job name
   # when a job name is not provided
-  build-exec:
+  run-tests:
     # Name the Job
     name: Build Executables
     # Set the type of machine to run on
@@ -42,6 +42,35 @@ jobs:
 
       - name: Run Tests
         run: make test
+        
+  check-coverage:
+    runs-on: ubuntu-18.04
+
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
+
+      # Setup the build system
+      - name: Copy Files
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
+
+      # Setup the build system
+      - name: Make Prep
+        run: make prep
+
+      - name: make
+        run: make
+
+      - name: Install Dependencies
+        run: sudo apt-get install lcov -y
+
+      - name: Check Coverage
+        run: make lcov
 
   build-docs:
     # Name the Job

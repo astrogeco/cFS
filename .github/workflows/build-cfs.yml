@@ -49,79 +49,79 @@ jobs:
     # Set the type of machine to run on
     runs-on: ubuntu-18.04
 
-      steps:
-        # Checks out a copy of your repository on the ubuntu-latest machine
-        - name: Checkout code
-          uses: actions/checkout@v2
-          with:
-            submodules: true
+    steps:
+      # Checks out a copy of your repository on the ubuntu-latest machine
+      - name: Checkout code
+        uses: actions/checkout@v2
+        with:
+          submodules: true
 
-        # Setup the build system
-        - name: Copy Files
-          run: |
-            cp ./cfe/cmake/Makefile.sample Makefile
-            cp -r ./cfe/cmake/sample_defs sample_defs
+      # Setup the build system
+      - name: Copy Files
+        run: |
+          cp ./cfe/cmake/Makefile.sample Makefile
+          cp -r ./cfe/cmake/sample_defs sample_defs
 
-        # Setup the build system
-        - name: Make Prep
-          run: make prep
-            
-        - name: Build Docs
-          run: |
-            make doc > make_doc_stdout.txt 2> make_doc_stderr.txt
+      # Setup the build system
+      - name: Make Prep
+        run: make prep
 
-        - name: Check Docs ERRORS
-          run: |
-            if [[ -s make_doc_stderr.txt ]]; then
-              echo "You must fix doxygen errors for \"doc\" before submitting a pull request"
-              echo ""
-              cat make_doc_stderr.txt
-              exit -1
-            fi
+      - name: Build Docs
+        run: |
+          make doc > make_doc_stdout.txt 2> make_doc_stderr.txt
 
-        - name: Build Usersguide
-          run: |
-            make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
+      - name: Check Docs ERRORS
+        run: |
+          if [[ -s make_doc_stderr.txt ]]; then
+            echo "You must fix doxygen errors for \"doc\" before submitting a pull request"
+            echo ""
+            cat make_doc_stderr.txt
+            exit -1
+          fi
 
-        - name: Check Userguide ERRORS
-          run: |
-            if [[ -s make_usersguide_stderr.txt ]]; then
-              echo "You must fix doxygen errors for \"usersguide\" before submitting a pull request"
-              echo ""
-              cat make_usersguide_stderr.txt
-              exit -1
-            fi
+      - name: Build Usersguide
+        run: |
+          make usersguide > make_usersguide_stdout.txt 2> make_usersguide_stderr.txt
 
-        - name: Check Userguide WARNINGS
-          run: |
-            if [[ -s build/doc/warnings.log ]]; then
-              echo "You must fix doxygen warnings for \"usersguide\" before submitting a pull request"
-              echo ""
-              cat build/doc/warnings.log
-              exit -1
-            fi
+      - name: Check Userguide ERRORS
+        run: |
+          if [[ -s make_usersguide_stderr.txt ]]; then
+            echo "You must fix doxygen errors for \"usersguide\" before submitting a pull request"
+            echo ""
+            cat make_usersguide_stderr.txt
+            exit -1
+          fi
 
-        - name: Build OSAL Guide
-          run: |
-            make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
+      - name: Check Userguide WARNINGS
+        run: |
+          if [[ -s build/doc/warnings.log ]]; then
+            echo "You must fix doxygen warnings for \"usersguide\" before submitting a pull request"
+            echo ""
+            cat build/doc/warnings.log
+            exit -1
+          fi
 
-        - name: Check OSAL Guide ERRORS
-          run: |
-            if [[ -s make_osalguide_stderr.txt ]]; then
-              echo "You must fix doxygen errors for \"osalguide\" before submitting a pull request"
-              echo ""
-              cat make_osalguide_stderr.txt
-              exit -1
-            fi
+      - name: Build OSAL Guide
+        run: |
+          make osalguide > make_osalguide_stdout.txt 2> make_osalguide_stderr.txt
 
-        - name: Check OSAL Guide WARNINGS
-          run: |
-            if [[ -s build/doc/warnings.log ]]; then
-              echo "You must fix doxygen warnings for \"osalguide\" before submitting a pull request"
-              echo ""
-              cat build/doc/warnings.log
-              exit -1
-            fi
+      - name: Check OSAL Guide ERRORS
+        run: |
+          if [[ -s make_osalguide_stderr.txt ]]; then
+            echo "You must fix doxygen errors for \"osalguide\" before submitting a pull request"
+            echo ""
+            cat make_osalguide_stderr.txt
+            exit -1
+          fi
+
+      - name: Check OSAL Guide WARNINGS
+        run: |
+          if [[ -s build/doc/warnings.log ]]; then
+            echo "You must fix doxygen warnings for \"osalguide\" before submitting a pull request"
+            echo ""
+            cat build/doc/warnings.log
+            exit -1
+          fi
 
 
 

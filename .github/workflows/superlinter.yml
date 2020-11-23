@@ -52,8 +52,8 @@ jobs:
         env:  
           ENABLE_UNIT_TESTS: true
         run: | 
-          make prep
-          make 
+          make install
+          make test
           
       - name: Build Docs
         run: make doc

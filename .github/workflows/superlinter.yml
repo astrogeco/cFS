@@ -54,7 +54,7 @@ jobs:
         
       - name: Run Tests
         run: |
-          make install
+          make
           make test
           
       - name: Build Docs                  

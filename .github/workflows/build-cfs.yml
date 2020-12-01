@@ -53,46 +53,46 @@ jobs:
       - name: Check Coverage
         run: make lcov
 
-run-tests-deprecate-false:
-    # Name the Job
-    name: Build Executables and Run Tests using deprecated values
-    strategy:
-      matrix:
-        buildtype: [debug, release]
-    # Set the type of machine to run on
-    runs-on: ubuntu-18.04
-    env:
-      OMIT_DEPRECATED: false
-      BUILDTYPE: ${{ matrix.buildtype }}
+  run-tests-deprecate-false:
+      # Name the Job
+      name: Build Executables and Run Tests using deprecated values
+      strategy:
+        matrix:
+          buildtype: [debug, release]
+      # Set the type of machine to run on
+      runs-on: ubuntu-18.04
+      env:
+        OMIT_DEPRECATED: false
+        BUILDTYPE: ${{ matrix.buildtype }}
 
-    steps:
-      # Checks out a copy of your repository on the ubuntu-latest machine
-      - name: Checkout code
-        uses: actions/checkout@v2
-        with:
-          submodules: true
+      steps:
+        # Checks out a copy of your repository on the ubuntu-latest machine
+        - name: Checkout code
+          uses: actions/checkout@v2
+          with:
+            submodules: true
 
-      # Setup the build system
-      - name: Copy Files
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
+        # Setup the build system
+        - name: Copy Files
+          run: |
+            cp ./cfe/cmake/Makefile.sample Makefile
+            cp -r ./cfe/cmake/sample_defs sample_defs
 
-      # Setup the build system
-      - name: Make Prep
-        run: make prep
+        # Setup the build system
+        - name: Make Prep
+          run: make prep
 
-      - name: make
-        run: make
+        - name: make
+          run: make
 
-      - name: Install Dependencies
-        run: sudo apt-get install lcov -y
+        - name: Install Dependencies
+          run: sudo apt-get install lcov -y
 
-      - name: Run Tests
-        run: make test
+        - name: Run Tests
+          run: make test
 
-      - name: Check Coverage
-        run: make lcov
+        - name: Check Coverage
+          run: make lcov
         
 
   build-docs:

@@ -58,11 +58,11 @@ jobs:
 
       - name: Run cFS
         run: |
-          ls ./build/exe/cpu1/
-          cd ./build/exe/cpu1
+          ls
           ./core-cpu1 > cFS_startup.txt &
           sleep 30
           ../host/cmdUtil --endian=LE --pktid=0x1806 --cmdcode=2 --half=0x0002
+        working-directory: ./build/exe/cpu1/
 
       - name: Check for cFS Warnings
         run: |
@@ -73,6 +73,7 @@ jobs:
                   grep -i 'warn\|err\|fail' cFS_startup.txt
                   exit -1
           fi
+        working-directory: ./build/exe/cpu1/
 
 
   run-tests-deprecate-false:
@@ -123,9 +124,10 @@ jobs:
           run: |
             ls ./build/exe/cpu1/
             cd ./build/exe/cpu1
-            ./core-cpu1 > cFS_startup.txt &
+            ./core-cpu1 > cpu1_cFS_startup.txt &
             sleep 30
             ../host/cmdUtil --endian=LE --pktid=0x1806 --cmdcode=2 --half=0x0002
+          working-directory: ./build/exe/cpu1/
 
         - name: Check for cFS Warnings
           run: |
@@ -136,6 +138,7 @@ jobs:
                     grep -i 'warn\|err\|fail' cFS_startup.txt
                     exit -1
             fi
+          working-directory: ./build/exe/cpu1/
 
 
 

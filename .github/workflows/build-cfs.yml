@@ -53,23 +53,28 @@ jobs:
       - name: Check Coverage
         run: make lcov
 
-      - name: Make Instal
+      - name: Make Install
         run: make install
+
+      - name: List cpu1
+        run: ls build/exe/cpu1/
 
       - name: Run cFS
         run: |
-          ls
-          ls ./build/exe/cpu1/
-          cd ./build/exe/cpu1
-          ./core-cpu1 > cFS_startup.txt &
+          ./core-cpu1 > cFS_startup_cpu1.txt &
           sleep 30
           ../host/cmdUtil --endian=LE --pktid=0x1806 --cmdcode=2 --half=0x0002
-          if [[ -n $(grep -i "warn\|err\|fail" cFS_startup.txt) ]]; then
+        working-directory: ./build/exe/cpu1/
+
+      - name: Check for cFS Warnings
+        run: |
+          if [[ -n $(grep -i "warn\|err\|fail" cFS_startup_cpu1.txt) ]]; then
                   echo "Must resolve warn|err|fail in cFS startup before submitting a pull request"
                   echo ""
                   grep -i 'warn\|err\|fail' cFS_startup.txt
                   exit -1
           fi
+        working-directory: ./build/exe/cpu1/
 
 
   run-tests-deprecate-false:
@@ -113,6 +118,28 @@ jobs:
         - name: Check Coverage
           run: make lcov
 
+        - name: Make Install
+          run: make install
+
+        - name: List cpu1
+          run: ls build/exe/cpu1/
+
+        - name: Run cFS
+          run: |
+            ./core-cpu1 > cFS_startup_cpu1.txt &
+            sleep 30
+            ../host/cmdUtil --endian=LE --pktid=0x1806 --cmdcode=2 --half=0x0002
+          working-directory: ./build/exe/cpu1/
+
+        - name: Check for cFS Warnings
+          run: |
+            if [[ -n $(grep -i "warn\|err\|fail" cFS_startup_cpu1.txt) ]]; then
+                    echo "Must resolve warn|err|fail in cFS startup before submitting a pull request"
+                    echo ""
+                    grep -i 'warn\|err\|fail' cFS_startup.txt
+                    exit -1
+            fi
+          working-directory: ./build/exe/cpu1/
 
   build-docs:
     # Name the Job

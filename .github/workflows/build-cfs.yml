@@ -58,7 +58,6 @@ jobs:
 
       - name: Run cFS
         run: |
-          ls
           ls ./build/exe/cpu1/
           cd ./build/exe/cpu1
           ./core-cpu1 > cFS_startup.txt &

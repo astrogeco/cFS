@@ -41,7 +41,7 @@ jobs:
       - name: Make Prep
         run: make prep
 
-      - name: make
+      - name: Make
         run: make
 
       - name: Install Dependencies
@@ -53,10 +53,14 @@ jobs:
       - name: Check Coverage
         run: make lcov
 
+      - name: Make Instal
+        run: make install
+
       - name: Run cFS
         run: |
-          ls build/exe/cpu1/
-          cd build/exe/cpu1
+          ls
+          ls ./build/exe/cpu1/
+          cd ./build/exe/cpu1
           ./core-cpu1 > cFS_startup.txt &
           sleep 30
           ../host/cmdUtil --endian=LE --pktid=0x1806 --cmdcode=2 --half=0x0002

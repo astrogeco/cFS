@@ -118,6 +118,9 @@ jobs:
         - name: Check Coverage
           run: make lcov
 
+        - name: Make Install
+          run: make install
+
         - name: List cpu1
           run: ls build/exe/cpu1/
 

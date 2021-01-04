@@ -6,8 +6,6 @@ inputs:
     default: 'main'
 runs:
   using: "composite"
-  env:
-    SIMULATION: native
   steps:
         # Checks out a copy of your repository on the ubuntu-latest machine
         - name: Checkout bundle code
@@ -16,6 +14,7 @@ runs:
             ls           
             git checkout https://github.com/nasa/cfs          
             cd cfs
+          shell: bash
         
         # Setup the build system
         - name: Copy Files
@@ -23,9 +22,14 @@ runs:
             cd cfs
             cp ./cfe/cmake/Makefile.sample Makefile
             cp -r ./cfe/cmake/sample_defs sample_defs
+          shell: bash
 
         # Setup the build system
         - name: Make Prep
           run: |
             cd cfs
             make prep
+          env:
+            SIMULATION: native
+          shell: bash
+          

@@ -12,7 +12,7 @@ runs:
           run: |
             pwd
             ls           
-            git checkout https://github.com/nasa/cfs          
+            git clone --recurse-submodules -j8 https://github.com/nasa/cfs
             cd cfs
           shell: bash
         

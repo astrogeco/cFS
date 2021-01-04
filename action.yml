@@ -1,46 +1,31 @@
 name: 'Checkout and Prep cFS Bundle'
 description: 'Checkouts the bundle and sets up everything'
 inputs:
-  who-to-greet:  # id of input
-    description: 'Who to greet'
-    required: true
-    default: 'World'
-    inputs:
   bundle-branch:  
     description: 'Branch to check out from nasa/cfs repository'
-    required: true
     default: 'main'
-  current-submodule:  # id of input
-    description: 'Currently Tested Submodule'
-    required: false
-    default: 'none'
-outputs:
-  random-number: 
-    description: "Random number"
-    value: ${{ steps.random-number-generator.outputs.random-id }}
 runs:
   using: "composite"
+  env:
+    SIMULATION: native
   steps:
         # Checks out a copy of your repository on the ubuntu-latest machine
-        - name: Checkout code
-          uses: actions/checkout@v2
-          with:
-            submodules: true
-            repository: github.com/nasa/cfs
-            ref: inputs.bundle-branch
-        
-        - name: Replace chosen submodule
-          uses: actions/checkout@v2
+        - name: Checkout bundle code
+          run: |
+            pwd
+            ls           
+            git checkout https://github.com/nasa/cfs          
+            cd cfs
         
         # Setup the build system
         - name: Copy Files
           run: |
+            cd cfs
             cp ./cfe/cmake/Makefile.sample Makefile
             cp -r ./cfe/cmake/sample_defs sample_defs
 
         # Setup the build system
         - name: Make Prep
-          run: make prep
-
-        - name: Make
-          run: make
+          run: |
+            cd cfs
+            make prep

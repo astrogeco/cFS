@@ -6,13 +6,6 @@ on:
   pull_request:
 
 jobs:
-          
-  run-fortify: 
-    runs-on: ubuntu-latest  
-    name: Fortify on Demand Scan
-    steps: 
-      - name: Run Fortify
-        uses: fortify/gha-setup-fod-uploader@v1.0.1
   
   static-analysis:
     name: Run cppcheck

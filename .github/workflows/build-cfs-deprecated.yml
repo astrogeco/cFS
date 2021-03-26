@@ -3,9 +3,6 @@ name: "Deprecated Build, Test, and Run"
 # Run every time a new commit pushed to main or for pull requests
 on:
   push:
-    branches:
-      - main
-
   pull_request:
 
 env:

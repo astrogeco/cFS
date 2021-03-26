@@ -68,12 +68,6 @@ jobs:
           submodules: true
 
       # Setup the build system
-      - name: Copy Files
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
-
-      # Setup the build system
       - name: Make
         run: make
 
@@ -103,12 +97,6 @@ jobs:
         uses: actions/checkout@v2
         with:
           submodules: true
-
-      # Setup the build system
-      - name: Copy sample_defs
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
 
       # Setup the build system
       - name: Make Install

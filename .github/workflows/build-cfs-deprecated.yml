@@ -35,12 +35,6 @@ jobs:
           submodules: true
 
       # Setup the build system
-      - name: Copy Files
-        run: |
-          cp ./cfe/cmake/Makefile.sample Makefile
-          cp -r ./cfe/cmake/sample_defs sample_defs
-
-      # Setup the build system
       - name: Make Prep
         run: make prep
 

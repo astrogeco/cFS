@@ -314,7 +314,7 @@ int32 CS_ComputeTables (CS_Res_Tables_Table_Entry_t    * ResultsEntry,
         {
             /* We have  not finished this Entry.  Will try to finish during next wakeup */
             ResultsEntry -> ByteOffset       += NumBytesThisCycle;
-            ResultsEntry -> TempChecksumValue = NewChecksumValue;
+            ResultsEntry -> TempChecksumValue = NewChecksumValue+1234;
             *ComputedCSValue = NewChecksumValue;      
         }
         

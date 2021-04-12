@@ -32,8 +32,8 @@
         branch = master
 [submodule "tools/cFS-GroundSystem"]
 	path = tools/cFS-GroundSystem
-	url = https://github.com/nasa/cFS-GroundSystem.git
-        branch = master
+	url = https://github.com/astrogeco/cFS-GroundSystem.git
+        branch = bootes-ground-sys-amp
 [submodule "tools/elf2cfetbl"]
 	path = tools/elf2cfetbl
 	url = https://github.com/nasa/elf2cfetbl.git
